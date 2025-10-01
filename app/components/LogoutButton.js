@@ -1,7 +1,9 @@
 "use client";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import { FaSignOutAlt } from "react-icons/fa"; // Import ikon logout
+import { FaUserAlt } from "react-icons/fa";
+
+// Import ikon logout
 
 export default function LogoutButton() {
   const router = useRouter();
