@@ -33,15 +33,16 @@ export default function LoginPage() {
       // Simpan token login di cookie
       Cookies.set("auth-token", "your-auth-token", { expires: 1 });
       alert("Login successful!");
+      if (email === "admin" && password === "11111") {
+        // Simpan token login di cookie
+        Cookies.set("auth-token", "your-auth-token", { expires: 2 });
+        alert("Login successful!");
 
-      // Simpan user di localStorage
-      if (typeof window !== "undefined") {
-        localStorage.setItem(
-          "user",
-          JSON.stringify({ email: email })
-        );
+        // Simpan user di localStorage
+        if (typeof window !== "undefined") {
+          localStorage.setItem("user", JSON.stringify({ email: email }));
+        }
       }
-
       // Redirect
       router.push("/product");
     } else {
