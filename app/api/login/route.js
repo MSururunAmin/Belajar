@@ -8,7 +8,7 @@ export async function POST(request) {
   // Dummy users
   const dummyUsers = [
     {
-      email: "Sururun47@gmail.com",
+      email: "123@gmail.com",
       password: "12345",
       token: "dummy-token-123",
       user: "user",
