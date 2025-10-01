@@ -25,28 +25,38 @@ export default function LoginPage() {
     setMounted(true);
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validasi sederhana
-    if (email === "Sururun47@gmail.com" && password === "12345") {
-      // Simpan token login di cookie
-      Cookies.set("auth-token", "your-auth-token", { expires: 1 });
-      alert("Login successful!");
-      if (email === "admin" && password === "11111") {
-        // Simpan token login di cookie
-        Cookies.set("auth-token", "your-auth-token", { expires: 2 });
-        alert("Login successful!");
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user, email, password }),
+      });
 
-        // Simpan user di localStorage
+      const data = await res.json();
+
+      if (data.success) {
+        Cookies.set("auth-token", data.token, { expires: 1 });
+
         if (typeof window !== "undefined") {
-          localStorage.setItem("user", JSON.stringify({ email: email }));
+          localStorage.setItem(
+            "user",
+            JSON.stringify({ email, role: data.role })
+          );
         }
+
+        alert("Login successful!");
+        router.push(data.redirect);
+      } else {
+        alert(data.message);
       }
-      // Redirect
-      router.push("/product");
-    } else {
-      alert("Invalid email or password. Please try again.");
+    } catch (err) {
+      console.error("Error login:", err);
+      alert("Something went wrong");
     }
   };
 
